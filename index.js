@@ -57,8 +57,8 @@ app.get("/", async (req, res) => {
     }
 });
 
-// Listen on the port specified by the $PORT environment variable
-const port = process.env.PORT || 3001;
+
+const port = process.env.PORT || 3002;
 app.listen(port, () => {
     console.log("nodemailer is listening at port " + port);
 });
