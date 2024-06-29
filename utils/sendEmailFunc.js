@@ -1,13 +1,12 @@
 const nodemailer = require('nodemailer');
-const catchAsyncError = require('../middlewares/catchAsyncError')
 
-exports.sendEmailFunc = catchAsyncError(async({ email, subject, message }) => {
-    return new Promise((resolve, reject) => {
+exports.sendEmailFunc = async ({ email, subject, message }) => {
+    try {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
                 user: process.env.EMAIL_USERNAME,
-                pass: process.env.EMAIL_PASSWORD 
+                pass: process.env.EMAIL_PASSWORD
             },
             tls: {
                 rejectUnauthorized: false
@@ -16,20 +15,17 @@ exports.sendEmailFunc = catchAsyncError(async({ email, subject, message }) => {
 
         const mailOptions = {
             from: process.env.EMAIL_USERNAME,
-            to: email,
+            to: process.env.EMAIL_USERNAME,
+            replyTo: email,
             subject: subject,
             text: message
         };
 
-        transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log(error);
-                reject({ message: 'An error occurred' });
-            } else {
-                console.log('Email sent:', info.response);
-                resolve({ message: 'Email sent successfully' });
-            }
-        });
-    });
-}
-)
+        await transporter.sendMail(mailOptions);
+
+        return { message: 'Email sent successfully' };
+    } catch (error) {
+        console.error(error);
+        throw new Error('An error occurred while sending the email.');
+    }
+};

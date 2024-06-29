@@ -3,7 +3,7 @@ const { sendEmailFunc } = require('../utils/sendEmailFunc');
 
 exports.sendMail = catchAsyncError(async (req, res) => {
     const response = await sendEmailFunc(req.query)
-    
+     
     if(!response) {
        return res.status(500).json({
         success: false,
