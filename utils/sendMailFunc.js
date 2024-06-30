@@ -4,7 +4,7 @@ const catchAsyncError = require("../middlewares/catchAsyncError")
 
 require("dotenv").config()
 
-    exports.sendEmailFunc = catchAsyncError(async ({ name, email, subject, message }) => {
+    exports.sendEmailFunc = catchAsyncError(async () => {
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -38,6 +38,7 @@ require("dotenv").config()
                 console.log(error);
             } else {
                 console.log('Email sent: ' + info.response);
+                alert("Email sent")
             }
         });
     
