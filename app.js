@@ -1,10 +1,15 @@
-const express = require('express');
-const app = express();
+const express = require('express')
+const cors = require('cors')
+const app = express()
 
-const contactRoute = require('./routes/contactMe');
+app.use(cors());
+app.use(express.json({limit: '50mb'}))
+app.use(express.urlencoded({extended: true, limit: '50mb'}))
 
+app.use(express.json());
 
-app.use('/', contactRoute);
+//import route
+const contactRouter = require('./routes/mail')
+app.use('/', contactRouter)
 
-module.exports = app;
- 
+module.exports = app
