@@ -16,8 +16,8 @@ exports.sendMailFunc = async(req, res) => {
         console.error(error);
 
         res.status(404).json({
-            success: true,
-            delivered: true,
+            success: false,
+            delivered: false,
             message: 'error while sending the email.'
         })
     }
