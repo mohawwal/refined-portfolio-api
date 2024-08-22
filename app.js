@@ -12,7 +12,5 @@ app.use(express.json());
 const contactRouter = require('./routes/mail')
 app.use('/', contactRouter)
 
-const apiRouter = require('./routes/apiKey')
-app.use('/', apiRouter)
 
 module.exports = app
